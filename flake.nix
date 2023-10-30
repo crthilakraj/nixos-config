@@ -7,14 +7,19 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: let
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
     system = "x86_64-linux";
     username = "tchikmagalore";
     hostname = "developerMachine";
     stateVersion = "23.05";
+    lib = inputs.nixpkgs.lib;
     pkgs = import nixpkgs {
       inherit system;
+      config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+          "vscode"
+        ];
     };
+
   in rec {
     homeConfigurations = {
       "${username}" = home-manager.lib.homeManagerConfiguration {
@@ -30,5 +35,15 @@
         ];
       };
     };
+
+    nixosConfigurations = {
+      sangraha = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./machines/sangraha/configuration.nix
+        ];
+      };
+    };
   };
+
 }
