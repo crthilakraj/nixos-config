@@ -101,11 +101,12 @@ in
     settings.KbdInteractiveAuthentication = false;
   };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # firewall settings
+  networking.firewall ={
+    enable = true;
+    allowedTCPPorts = [5000];
+    allowedUDPPorts = [];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -129,5 +130,11 @@ in
   ## nix settings
   nix.settings.experimental-features = [ "nix-command" ];
 
+  ## nix-serve config
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/var/binary-cache.pem";
+    port = 5000;
+  };
 
 }
