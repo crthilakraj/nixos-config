@@ -125,4 +125,9 @@ in
     mode = "0440";
     owner = config.users.users.nobody.name;
   };
+
+  ## nix settings
+  nix.settings.experimental-features = [ "nix-command" ];
+
+
 }
