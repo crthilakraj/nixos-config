@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, vscode-server, ... }: let
+{ config, pkgs, ... }: let
   username = "tchikmagalore";
 in
 {
@@ -16,8 +16,14 @@ in
   boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "sangraha"; # Define your hostname.
+  networking.wireless.environmentFile = config.sops.secrets."wireless".path;
+  networking.wireless.networks = {
+    enable = true;
+    "@name@" = {
+      psk = "@pass@";
+    };
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -60,6 +66,8 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       git
+      sops
+      age
     ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXMaiggm/K/Sa15wps/K2h5b/J/NDUYBotKhVRdoN5sI6WNcQWO29d/3/vLJgLN2ca4nS9np96E0G1+ZFG+hO+gL9BIviL37J6LsQLwEGiTrbnpZ8eATA6drv1IOeVSTJFuY8CzjerbrTD8u5v7kU8/Ib81x3wBLW5TC6KRL7sUWWNfgqP2WNfou6QraVDojTlWiqgNIuQiqIOGw6KX8plB5fRlGe4e23WoHBfC6lV+eBR9KEjzhVppegDkXP1tpDHr5Tca0x6+I8QAu7WEMNl5nIB9o4IMwXTxrikRv3WN0HzCLCzjlYBNUDlOxAwADs8qErHBeRLPtP/Btd+w7Az8SQVCswtDgA0FHlXGiWBiDznBNhXtrsj98QY17yII9LQgTpdSO4u15X0nGS1uOtxJZCukWcX7/pXsybzqIfH/tbC6Deh0Nd3ogyzZaNT5v89u6VNfvVTaVOsF7yE796qqUOlVhovIF0DrFhq7UW9703qTJa57lGyy4ekD1hB06k= tchikmagalore@tchikmagalore"
@@ -79,10 +87,10 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
@@ -109,4 +117,12 @@ in
 
   # vscode server settings
   services.vscode-server.enable = true;
+
+  #sops setting
+  sops.defaultSopsFile = ./secrets.yml;
+  sops.age.keyFile = "${config.users.users.tchikmagalore.home}/.config/sops/age/system.txt";
+  sops.secrets."wireless" = {
+    mode = "0440";
+    owner = config.users.users.nobody.name;
+  };
 }
