@@ -5,9 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/23.05";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, home-manager, vscode-server, ... }@inputs: let
     system = "x86_64-linux";
     username = "tchikmagalore";
     hostname = "developerMachine";
@@ -41,6 +43,7 @@
         inherit system;
         modules = [
           ./machines/sangraha/configuration.nix
+          vscode-server.nixosModules.default
         ];
       };
     };
