@@ -129,6 +129,9 @@ in
 
   ## nix settings
   nix.settings.experimental-features = [ "nix-command" ];
+  nix.settings.trusted-public-keys = [
+    "abivruddi:4KY+yYoLr8MvG1VPmaVqj+ye5jHqyQKLv6cShSueyLo="
+  ];
 
   ## nix-serve config
   services.nix-serve = {
