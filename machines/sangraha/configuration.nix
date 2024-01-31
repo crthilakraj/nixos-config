@@ -71,6 +71,7 @@ in
     ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXMaiggm/K/Sa15wps/K2h5b/J/NDUYBotKhVRdoN5sI6WNcQWO29d/3/vLJgLN2ca4nS9np96E0G1+ZFG+hO+gL9BIviL37J6LsQLwEGiTrbnpZ8eATA6drv1IOeVSTJFuY8CzjerbrTD8u5v7kU8/Ib81x3wBLW5TC6KRL7sUWWNfgqP2WNfou6QraVDojTlWiqgNIuQiqIOGw6KX8plB5fRlGe4e23WoHBfC6lV+eBR9KEjzhVppegDkXP1tpDHr5Tca0x6+I8QAu7WEMNl5nIB9o4IMwXTxrikRv3WN0HzCLCzjlYBNUDlOxAwADs8qErHBeRLPtP/Btd+w7Az8SQVCswtDgA0FHlXGiWBiDznBNhXtrsj98QY17yII9LQgTpdSO4u15X0nGS1uOtxJZCukWcX7/pXsybzqIfH/tbC6Deh0Nd3ogyzZaNT5v89u6VNfvVTaVOsF7yE796qqUOlVhovIF0DrFhq7UW9703qTJa57lGyy4ekD1hB06k= tchikmagalore@tchikmagalore"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQy3qxLd5bkldwmWxNdBrvp6gUDzrDp9p9Me3C5HoJp3m+OqiLekmlRo5XxgVcmr2KqKnHCd+y4cOnhE9wI6PgLeobIBhCYSxwa+0lYbOxlOa1qA2KSK4rlwc3EoYIxKl8RT0LeD5RVyzs+AO8pyGEsdg4L3nu0TtX7GdPQlngB2qmToXZ+tTI+V3qBS+vzWIXrqzNLRvutIi+Y8vFY+EFhhFG+IDXENN4kVoIBRundORBCbmn8WTkXO2ASVf3ibhaTIrFSC0/yoR4t/313uOrzJpf7RcRq1TZF94KfT4EqREydcakkn0iX7UsITHfQP7xmwDI4WduKbqa7cfBp5vj2F4qxeqtzvUrRvVS5xGOvIUM/DvfJeIjuAYLohxm8o7JWevuNHDUu0g78JhayVaYVArEph1z47CpO7/JRo6WdMhZIPtU+RQwkVV/HtEAU0yfjZm7LXzsMIOnjF/NbwDKpTwtCnOzKALml3A8ZOrWvmYQT9qsmqZv2dIHJ9RLfvU= thc2mu@NST-C-00007"
     ];
   };
 
@@ -99,6 +100,7 @@ in
     enable = true;
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
+    settings.forwardX11 = true;
   };
 
   # firewall settings
